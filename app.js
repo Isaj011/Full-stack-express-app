@@ -24,12 +24,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/stuff', (req, res, next) => {
-    console.log(req.body);
-    res.status(201).json({
-        message: 'Thing created successfully!'
-    });
-});
+// Require Notes routes
+require('./routes/thing.js')(app);
 
 app.use('/api/stuff', (req, res, next) => {
     const stuff = [{
