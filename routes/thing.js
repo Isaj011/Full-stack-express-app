@@ -1,23 +1,23 @@
-module.exports = (app) => {
-    //const notes = require('../controllers/note.controller.js');
+const things = require('../controllers/thing.js');
+const express = require('express')
+const router = express.Router();
 
-    // Create a new Note
-    app.post('/api/stuff', (req, res, next) => {
-        console.log(req.body);
-        res.status(201).json({
-            message: 'Thing created successfully!'
-        });
-    });
+const auth = require('../middleware/auth');
+const multer = require('../middleware/multer-config');
 
-    //     // Retrieve all Notes
-    //     app.get('/notes', notes.findAll);
+// Create a new Note
+router.post('/', auth, multer, things.create)
 
-    //     // Retrieve a single Note with noteId
-    //     app.get('/notes/:noteId', notes.findOne);
+// Retrieve all Notes
+router.get('/', auth, things.findAll);
 
-    //     // Update a Note with noteId
-    //     app.put('/notes/:noteId', notes.update);
+// Retrieve a single Note with noteId
+router.get('/:id', auth, things.findOne);
 
-    //     // Delete a Note with noteId
-    //     app.delete('/notes/:noteId', notes.delete);
-}
+// Update a Note with noteId
+router.put('/:id', auth, multer, things.update);
+
+// Delete a Note with noteId
+router.delete('/:id', auth, things.delete);
+
+module.exports = router;
